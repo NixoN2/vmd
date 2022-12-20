@@ -12,7 +12,17 @@ func CreateUser(c echo.Context) error {
 	if err := c.Bind(user); err != nil {
 		return c.String(http.StatusBadRequest, "bad request")
 	}
-	models.DB.Create(&user)
+	models.DB.Create(&models.User{
+		Name:         user.Name,
+		LastName:     user.LastName,
+		Password:     "",
+		Email:        user.Email,
+		Age:          user.Age,
+		Birthday:     user.Birthday,
+		Image:        user.Image,
+		Description:  user.Description,
+		RefreshToken: "",
+	})
 	return c.JSON(http.StatusOK, user)
 }
 
